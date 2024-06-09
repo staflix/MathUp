@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MathUp!</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/avatar.css') }}">
+    <link rel="icon" href="../static/media/logo.png">
+    <style>
+        .notification {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            animation: fadeOut 2s forwards; /* Анимация затухания */
+        }
+
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { opacity: 0; display: none; } /* Когда анимация закончится, скрываем сообщение */
+        }
+
+        .notification.active {
+            display: block; /* Показываем сообщение перед началом анимации */
+        }
+    </style>
+</head>
+<body>
+<form id="avatarForm" action="" method="post">
+    {{ form.hidden_tag() }}
+    <div class="choose-avatar">
+        <div class="centered-div">
+        <span class="title">Выберите аватарку</span>
+        <div class="avatars-container">
+            <span class="left"></span>
+            <div class="avatars">
+                {% for i in range(1, 61) %}
+                    <div class="avatar-item" style="background-image: url('{{ url_for('static', filename='avatars_img/' ~ i ~ '.png') }}');">
+                        <button type="button" class="text-avatar" data-avatar="{{ i }}">Выбрать</button>
+                    </div>
+                {% endfor %}
+            </div>
+            <span class="right"></span>
+        </div>
+        <button type="button" id="backButton" class="button-simple">Назад</button>
+        </div>
+    </div>
+</form>
+<div class="notification" id="notification">Аватарка успешно изменена!</div>
+<script src="{{ url_for('static', filename='js/avatar.js') }}"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const avatarForm = document.getElementById('avatarForm');
+    const notification = document.getElementById('notification');
+    const next_page = '{{ next_page }}';
+
+    avatarForm.addEventListener('click', function(event) {
+        if (event.target.classList.contains('text-avatar')) {
+            const avatarNumber = event.target.getAttribute('data-avatar');
+            const formData = new FormData();
+            formData.append('avatar', avatarNumber);
+
+            fetch('{{ url_for("change_avatar_API.change_avatar", rdm_string=rdm_string) }}', {
+                method: 'POST',
+                body: formData
+            }).then(response => response.json())
+              .then(data => {
+                if (data.success) {
+                    notification.classList.add('active');
+                    setTimeout(() => {
+                        notification.classList.remove('active');
+                        if (next_page === 'main_page') {
+                            window.location.href = `/`;
+                        } else if (next_page === 'company') {
+                            window.location.href = `/menu_company`;
+                        } else if (next_page === 'choice_class') {
+                            window.location.href = `/choice_class`;
+                        } else if (next_page.includes('choice_topic_all_classes_trainer')) {
+                            const page = next_page.split(',').pop();
+                            window.location.href = `/${page}`;
+                        }
+                    }, 2000);
+                } else {
+                    alert('Error changing avatar');
+                }
+            }).catch(error => console.error('Error:', error));
+        } else if (event.target.id === 'backButton') {
+            if (next_page === 'main_page') {
+                window.location.href = `/`;
+            } else if (next_page === 'company') {
+                window.location.href = `/menu_company`;
+            } else if (next_page === 'choice_class') {
+                window.location.href = `/choice_class`;
+            } else if (next_page.includes('choice_topic_all_classes_trainer')) {
+                const page = next_page.split(',').pop();
+                window.location.href = `/${page}`;
+            }
+        }
+    });
+});
+</script>
+</body>
+</html>

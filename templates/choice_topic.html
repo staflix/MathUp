@@ -1,0 +1,100 @@
+{% extends 'header.html' %}
+{% block links %}
+<link rel="stylesheet" href="../static/css/style.css"/>
+<link href="../static/css/choice_topic.css" rel="stylesheet"/>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% endblock %}
+{% block content %}
+<style>
+    .card-front__heading {
+        font-size: 24px;
+        margin: 0 0 10px;
+    }
+
+    .record-info {
+        font-size: 18px;
+        color: #333;
+        text-align: right;
+    }
+
+    .record-info p {
+        margin: 5px 0;
+    }
+
+    .card-front__text-view {
+        margin: 0;
+        font-size: 18px;
+    }
+</style>
+<form action="" method="post">
+<div class="attempts-history" id="attempts-history">История попыток</div>
+    <div class="history" id="history">
+        {% for line in history_text %}
+        <h2>{{line}}</h2>
+        {% endfor %}
+        <div class="closeModal" id="close_modal"></div>
+    </div>
+    <section class="choose-class">
+        <div class="slider">
+            <input type="radio" name="slider" id="item-1" checked>
+            <input type="radio" name="slider" id="item-2">
+            <input type="radio" name="slider" id="item-3">
+            <input type="radio" name="slider" id="item-4">
+            <input type="radio" name="slider" id="item-5">
+            <input type="radio" name="slider" id="item-6">
+            <div class="cards">
+                {% for topic, data in topics[num_class].items() %}
+                <label class="slide" for="item-{{ loop.index }}" id="song-{{ loop.index }}"
+                       data-bg-color="{{ back_colors[loop.index - 1] }}">
+                    <div class="card-section">
+                        <div class="card-front">
+                            <div class="card-front__tp card-front__tp--{{ colors[loop.index - 1] }}">
+                                <h1 class="card-front__heading">{{ topic }}</h1>
+                                <div class="record-info">
+                                    <p class="second-heading">Ваша точность: {{ data['Ваша точность:'] }}%</p>
+                                    <p class="second-heading">Ваша скорость ответов: {{ data['Ваша скорость ответов:'] }} отв/мин</p>
+                                    <p class="second-heading">Общее время: {{ data['Общее время:'] }} минут</p>
+                                </div>
+                            </div>
+                            <div class="card-front__bt" onclick="startTopic('{{ num_class }}', '{{ topic }}')">
+                                <p class="card-front__text-view">Начать</p>
+                            </div>
+                        </div>
+                    </div>
+                </label>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+</form>
+
+<script>
+    $(document).ready(function() {
+        function updateBackgroundColor() {
+            let checkedSlide = $('input[name="slider"]:checked').attr('id');
+            let color = $('#' + checkedSlide).nextAll('.cards').find('.slide').filter(function() {
+                return $(this).attr('for') === checkedSlide;
+            }).attr('data-bg-color');
+            $('body').css('background-color', color);
+        }
+
+        $('input[name="slider"]').change(function() {
+            updateBackgroundColor();
+        });
+
+        // Initialize the background color on page load
+        updateBackgroundColor();
+    });
+
+    function startTopic(num_class, topic) {
+        $.post('/save_result', {
+            num_class: num_class,
+            topic: topic,
+            action: "start"
+        }).done(function() {
+            window.location.href = `/${num_class}/${topic}`;
+        });
+    }
+</script>
+    <script src="../static/js/history.js"></script>
+{% endblock %}

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathUp!</title>
+    <link rel="icon" href="../static/media/logo.png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/task_trainer.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        #timer {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 10px;
+            background: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: 'Arial', sans-serif;
+            font-size: 16px;
+        }
+        #next-button {
+            display: block;
+        }
+    </style>
+    <script>
+        $(document).ready(function() {
+            const num_class = {{ num_class }};
+            const topic = "{{ topic }}";
+            const correctAnswer = "{{ answer }}";
+            const mix = "{{ mix }}";  // Add mix variable
+
+            let seconds = localStorage.getItem('seconds') ? parseInt(localStorage.getItem('seconds')) : {{ seconds }};
+            let minutes = localStorage.getItem('minutes') ? parseInt(localStorage.getItem('minutes')) : {{ minutes }};
+            let correct_answers = localStorage.getItem('correct_answers') ? parseInt(localStorage.getItem('correct_answers')) : {{ correct_answers }};
+            let total_questions = localStorage.getItem('total_questions') ? parseInt(localStorage.getItem('total_questions')) : {{ total_questions }};
+
+            const timerElement = $('#timer');
+
+            function updateTimer() {
+                seconds++;
+                if (seconds >= 60) {
+                    seconds = 0;
+                    minutes++;
+                }
+                const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+                const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
+                timerElement.text(`${formattedMinutes}:${formattedSeconds}`);
+                localStorage.setItem('seconds', seconds);
+                localStorage.setItem('minutes', minutes);
+            }
+
+            setInterval(updateTimer, 1000);
+
+            function showResult(isCorrect) {
+                const resultText = isCorrect ? "Правильно!" : "Неправильно!";
+                $('#result').text(resultText).toggleClass("correct", isCorrect).toggleClass("incorrect", !isCorrect);
+
+                if (isCorrect) {
+                    correct_answers++;
+                }
+                total_questions++;
+                $('.choice-button').attr('disabled', true);
+                $('#submit-button').attr('disabled', true);
+                $('#text-answer').attr('disabled', true);
+
+                localStorage.setItem('correct_answers', correct_answers);
+                localStorage.setItem('total_questions', total_questions);
+
+                // Отправка результата на сервер для записи в файл
+                $.post('/save_result', {
+                    num_class: num_class,
+                    topic: topic,
+                    result: isCorrect ? "+" : "-",
+                    action: "add"
+                });
+            }
+
+            $('#submit-button').on('click', function() {
+                const userAnswer = $('#text-answer').val();
+                const isCorrect = userAnswer === correctAnswer;
+                showResult(isCorrect);
+            });
+
+            $('#next-button').on('click', function() {
+                if ($('#submit-button').is(':disabled')) {
+                    $.post(`/${num_class}/${topic}`, {
+                        minutes: minutes,
+                        seconds: seconds,
+                        correct_answers: correct_answers,
+                        total_questions: total_questions
+                    }, function() {
+                        window.location.reload();
+                    });
+                } else {
+                    total_questions++;
+                    localStorage.setItem('total_questions', total_questions);
+                    $.post(`/${num_class}/${topic}`, {
+                        minutes: minutes,
+                        seconds: seconds,
+                        correct_answers: correct_answers,
+                        total_questions: total_questions
+                    }, function() {
+                        window.location.reload();
+                    });
+                }
+            });
+
+            $('#back-button').on('click', function() {
+                if (mix === 'True') {
+                    localStorage.removeItem('seconds');
+                    localStorage.removeItem('minutes');
+                    localStorage.removeItem('correct_answers');
+                    localStorage.removeItem('total_questions');
+                } else {
+                    localStorage.clear();  // Clear all local storage items
+                }
+                const timeSpent = `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+                if (!correct_answers){
+                    correct_answers = 0
+                }
+                if (!total_questions){
+                    total_questions = 0
+                }
+                $.post('/save_result', {
+                    num_class: num_class,
+                    time: timeSpent,
+                    correct_answers: correct_answers,
+                    total_questions: total_questions,
+                    topic: topic,
+                    action: "end"
+                }).done(function() {
+                    $.post(`/${num_class}`, {
+                        time: timeSpent,
+                        correct_answers: correct_answers,
+                        total_questions: total_questions,
+                        topic: topic
+                    }).done(function() {
+                        window.location.href = `/${num_class}`;
+                    });
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+<div id="timer">{{ minutes|default(0, true) }}:{{ seconds|default('00', true) }}</div>
+<button id="back-button" {% if mix == 'True' %} onclick="window.location.href='/mix'" {% endif %}>← Завершить попытку</button>
+<div class="container">
+    <p id="question">{{ text }}</p>
+    <div id="image-container">
+        {% if count_img > 0 %}
+        <img src="{{ url_for('static', filename='pic_trainer/' + path_img) }}" alt="Task Image">
+        {% endif %}
+    </div>
+    <div id="choices-container">
+        {% if choices %}
+        {% for choice in choices %}
+        <button class="choice-button">{{ choice }}</button>
+        {% endfor %}
+        {% else %}
+        <input type="number" id="text-answer" name="answer" placeholder="Введите ответ">
+        <button id="submit-button">Ответить</button>
+        {% endif %}
+    </div>
+
+    <p id="result"></p>
+
+    <button id="next-button">Дальше</button>
+</div>
+</body>
+</html>

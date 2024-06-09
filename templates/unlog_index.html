@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>MathUp!</title>
+    <meta property="og:title" content="MathUp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta property="twitter:card" content="summary_large_image" />
+
+    <style data-tag="reset-style-sheet">
+      html {  line-height: 1.15;}body {  margin: 0;}* {  box-sizing: border-box;  border-width: 0;  border-style: solid;}p,li,ul,pre,div,h1,h2,h3,h4,h5,h6,figure,blockquote,figcaption {  margin: 0;  padding: 0;}button {  background-color: transparent;}button,input,optgroup,select,textarea {  font-family: inherit;  font-size: 100%;  line-height: 1.15;  margin: 0;}button,select {  text-transform: none;}button,[type="button"],[type="reset"],[type="submit"] {  -webkit-appearance: button;}button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner {  border-style: none;  padding: 0;}button:-moz-focus,[type="button"]:-moz-focus,[type="reset"]:-moz-focus,[type="submit"]:-moz-focus {  outline: 1px dotted ButtonText;}a {  color: inherit;  text-decoration: inherit;}input {  padding: 2px 4px;}img {  display: block;}html { scroll-behavior: smooth  }
+    </style>
+    <style data-tag="default-style-sheet">
+      html {
+        font-family: Noto Sans;
+        font-size: 16px;
+      }
+
+      body {
+        font-weight: 400;
+        font-style:normal;
+        text-decoration: none;
+        text-transform: none;
+        letter-spacing: normal;
+        line-height: 1.15;
+        color: var(--dl-color-theme-neutral-dark);
+        background-color: var(--dl-color-theme-neutral-light);
+
+        fill: var(--dl-color-theme-neutral-dark);
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/animate.css@4.1.1/animate.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@teleporthq/teleport-custom-scripts/dist/style.css"
+    />
+  </head>
+  <body>
+    <link rel="stylesheet" href="../static/css/style.css" />
+    <div>
+      <link href="../static/css/unlog_index.css" rel="stylesheet" />
+
+      <div class="home-container">
+        <div class="home-container01">
+          <div data-role="Header" class="home-navbar-container">
+            <div class="home-navbar">
+              <div class="home-logo">
+                <img
+                  alt="image"
+                  src="https://aheioqhobo.cloudimg.io/v7/_playground-bucket-v2.teleporthq.io_/538af5d6-3673-4de0-b11e-ccad9ffccc7d/4629f8d0-38ce-418d-b32f-0a9dc163d14d?org_if_sml=1760&amp;force_format=original"
+                  class="home-image"
+                />
+              </div>
+              <div class="home-right">
+                <a href="/login" class="home-sign-in Link">Войти</a>
+                <a href="/register" class="home-link">
+                  <div id="register" class="home-get-started">
+                    <span class="home-text">Зарегистрироваться</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+          <section class="home-hero">
+            <header class="home-header">
+              <h1 class="home-text01">
+                Улучшите ваши математические навыки с MathUp!
+              </h1>
+              <p class="home-text02">
+                MathUp - это удобная образовательная платформа, где Вы сможете
+                тренироваться и улучшать навыки в игровой форме! У нас найдутся задания по математике, которые
+                могут помочь стать настоящим мастером в темах 1-4 классов!
+              </p>
+            </header>
+            <div class="home-dashboard-preview">
+              <div class="home-outline">
+                <div
+                  data-thq="slider"
+                  data-loop="true"
+                  data-autoplay="true"
+                  data-navigation="true"
+                  data-pagination="true"
+                  class="home-slider swiper"
+                >
+                  <div data-thq="slider-wrapper" class="swiper-wrapper">
+                    <div
+                      data-thq="slider-slide"
+                      class="home-slider-slide swiper-slide"
+                    ></div>
+                    <div
+                      data-thq="slider-slide"
+                      class="home-slider-slide1 swiper-slide"
+                    ></div>
+                    <div
+                      data-thq="slider-slide"
+                      class="home-slider-slide2 swiper-slide"
+                    ></div>
+                  </div>
+                  <div
+                    data-thq="slider-pagination"
+                    class="home-slider-pagination swiper-pagination swiper-pagination-bullets swiper-pagination-horizontal"
+                  >
+                    <div
+                      data-thq="slider-pagination-bullet"
+                      class="swiper-pagination-bullet swiper-pagination-bullet-active"
+                    ></div>
+                    <div
+                      data-thq="slider-pagination-bullet"
+                      class="swiper-pagination-bullet"
+                    ></div>
+                    <div
+                      data-thq="slider-pagination-bullet"
+                      class="swiper-pagination-bullet"
+                    ></div>
+                  </div>
+                  <div
+                    data-thq="slider-button-prev"
+                    class="swiper-button-prev"
+                  ></div>
+                  <div
+                    data-thq="slider-button-next"
+                    class="swiper-button-next"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="home-features">
+            <div class="home-container02">
+              <h2 class="home-text03"></h2>
+              <h3 class="home-text04 HeadingTwo">
+                <span>Что вас ждёт?</span>
+                <br />
+              </h3>
+            </div>
+            <div class="home-container03">
+              <div class="home-container04">
+                <span class="home-text07">
+                  <span>Тренажёр</span>
+                </span>
+                <div class="home-container05">
+                  <h5 class="home-heading">Для кого этот режим?</h5>
+                  <span>
+                    Этот режим создан для тех, кто хочет самостоятельно выбирать тип задач,
+                    чтобы сосредоточиться на своих слабых местах.
+                  </span>
+                </div>
+                <div class="home-container06">
+                    <h5 class="home-heading">Какие темы можно тренировать?</h5>
+                    <span>
+                      В каждом из 4 классов представлено 6 основных тем, оттачивать которые необходимо каждому школьнику.
+                      Любая тема на Ваш выбор!
+                    </span>
+                </div>
+                <div class="home-container06">
+                    <h5 class="home-heading">Как тренажёр помогает?</h5>
+                    <span>
+                      После окончания тренировки Вы увидите точность своих ответов, а также длительность попытки.
+                      Тренажёр выявит Ваши сильные и слабые стороны!
+                    </span>
+                </div>
+              </div>
+              <div class="home-container08">
+              </div>
+            </div>
+            <div class="home-divider"></div>
+            <div class="home-container09">
+              <div class="home-container10">
+                <span class="home-text17">
+                  <span>Кампания</span>
+                </span>
+                <div class="home-container11">
+                  <h5 class="home-heading1">Для кого этот режим?</h5>
+                  <span class="home-text20">
+                    Этот режим для тех, кто хотел бы изучить все материалы в интересном формате!
+                    Каждые 100 уровней — один класс обучения.
+                    Вы будете проходить их один за другим, продвигаясь по сказочному миру от 1 до 4 класса!
+                  </span>
+                </div>
+                <div class="home-container06">
+                    <h5 class="home-heading">Как проходит обучение?</h5>
+                    <span>
+                      Ребенок не может пропускать уровни и занимается по всем темам, которые проходят в школах.
+                      <br />
+                      Такой формат поможет быть всесторонне развитым!
+
+                    </span>
+                </div>
+                <div class="home-container06">
+                    <h5 class="home-heading">С какого класса нужно начинать?</h5>
+                    <span>
+                      Не обязательно проходить те уровни, материалы которых Вам давно известны!
+                      Итоговые тесты классов всегда открыты для попытки, просто выберите подходящий!
+                    </span>
+                </div>
+              </div>
+              <div class="home-container15"></div>
+            </div>
+            <div class="home-divider1"></div>
+            <div class="home-container16">
+              <div class="home-container17">
+                <span class="home-text30">Почему стоит учиться с нами?</span>
+                <div class="home-container18">
+                  <h5 class="home-heading2">Интерактивность и вовлечённость</h5>
+                  <span>
+                    Мы стремимся сделать процесс обучения интересным и
+                    увлекательным. В наших задачах используются яркие визуальные элементы и игровые механики.
+                    <br />
+                    Также присутствует соревновательный элемент — топ из успешных учеников, за место в котором необходимо бороться с другими!
+                  </span>
+                </div>
+                <div class="home-container19">
+                  <h5 class="home-heading3">Простота в использовании</h5>
+                  <span>
+                    Нужно лишь зарегистрироваться и можно начинать обучение.
+                    У нас Вы можете выбирать необходимые темы самостоятельно или проходить сразу всю программу.
+                  </span>
+                </div>
+              </div>
+              <div class="home-container20"></div>
+            </div>
+            <div class="home-divider2"></div>
+            <div class="home-container21">
+              <div class="home-container22">
+                <span class="home-text33">Наша программа</span>
+                <div class="home-container23">
+                  <span class="home-text34">
+                    <span class="home-text35">
+                      Задания составлялись на основе стандартов от министерства просвещения Российской федерации,
+                      а также учебников по математике, по которым сейчас многие обучаются.
+                    </span>
+                  </span>
+                </div>
+                <div class="home-container24">
+                  <span>
+                    Образовательная часть проекта была выполнена при участии ученика специализированного учебно-научного
+                    центра НГУ (Физико-математической школы имени М. А. Лаврентьева при НГУ), обучающемся по профилю "исследовательская математика".
+                  </span>
+                </div>
+                <div class="home-container25">
+                  <i>
+                    "Мы бы очень хотели помочь детям обучаться в интересном для них формате, заинтересовать их математикой,
+                    поднять их успеваемость, а также помочь приятно и с пользой провести время"
+                    – команда CodeBlaze.
+                  </i>
+                </div>
+              </div>
+              <div class="home-container26"></div>
+            </div>
+          </section>
+          <div class="home-container27">
+            <header class="home-info">
+              <h1 class="home-text39">Присоединяйтесь к нам!</h1>
+              <p class="home-text41">
+                Ваш успех в математике – наша главная цель. Присоединяйтесь к
+                нам и убедитесь, что учиться может быть увлекательно и
+                интересно!
+              </p>
+              <br />
+              <br />
+              <a href="/register" class="home-link">
+                <div id="register" class="home-get-started1">
+                  <span class="home-text43">Зарегистрироваться</span>
+                </div>
+              </a>
+            </header>
+          </div>
+          <footer class="home-footer">
+            <div class="home-top">
+              <div class="home-right1">
+                <div class="home-category">
+                  <span class="home-text44">Команда CodeBlaze</span>
+                  <div class="home-links">
+                    <span class="home-text49">Email:&nbsp;mathup.help@gmail.com</span>
+                    <span class="home-text48">Telegram:&nbsp;https://t.me/codebIaze</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="home-bottom">
+              <span class="home-text57">
+                <span class="home-text58">
+                  © 2024 CodeBlaze. Все права защищены
+                </span>
+                <br />
+              </span>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+      <script
+      defer=""
+      src="https://unpkg.com/@teleporthq/teleport-custom-scripts"
+    ></script>
+  </body>
+</html>
